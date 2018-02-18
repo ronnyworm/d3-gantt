@@ -182,6 +182,11 @@ function drawRects(theArray, theGap, theTopPad, theSidePad, theBarHeight, theCol
       }  
     }
   })
+  .attr("opacity", function(d){
+    if (d.relevance != undefined){
+      return d.relevance;
+    }
+  });
 
 
   var rectText = rectangles.append("text")
@@ -197,7 +202,12 @@ function drawRects(theArray, theGap, theTopPad, theSidePad, theBarHeight, theCol
   .attr("font-size", 11)
   .attr("text-anchor", "middle")
   .attr("text-height", theBarHeight)
-  .attr("fill", "#000"); // text color
+  .attr("fill", "#000")
+  .attr("opacity", function(d){
+    if (d.relevance != undefined){
+      return d.relevance;
+    }
+  }); // text color
 
 
 

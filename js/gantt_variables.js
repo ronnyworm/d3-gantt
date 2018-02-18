@@ -39,6 +39,7 @@ window.taskArray = [
   {
     task: "The Task 1235",
     type: "C",
+    relevance: 0.3,
     startTime: "2016-04-30",
     endTime: "2016-05-15",
     details: "Example"
