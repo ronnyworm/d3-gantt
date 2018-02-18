@@ -134,6 +134,7 @@ function drawRects(theArray, theGap, theTopPad, theSidePad, theBarHeight, theCol
   .attr("height", theGap)
   .attr("stroke", "none")
   .attr("fill", function(d){
+    // Backgroundcolor of the whole row
     for (var i = 0; i < categories.length; i++){
       if (d.type == categories[i]){
         return d3.rgb(theColorScale(i));
@@ -164,10 +165,21 @@ function drawRects(theArray, theGap, theTopPad, theSidePad, theBarHeight, theCol
   .attr("height", theBarHeight)
   .attr("stroke", "none")
   .attr("fill", function(d){
-    for (var i = 0; i < categories.length; i++){
-      if (d.type == categories[i]){
-        return d3.rgb(theColorScale(i));
+    // Color of the task
+    if (window.ganttstates){
+      if (d.state != undefined){
+        return d3.rgb(window.ganttstates[d.state]);
       }
+      else{
+        return d3.rgb(window.ganttstates["default"]);
+      }
+    }
+    else{
+      for (var i = 0; i < categories.length; i++){
+        if (d.type == categories[i]){
+          return d3.rgb(theColorScale(i));
+        }
+      }  
     }
   })
 
@@ -208,8 +220,12 @@ function drawRects(theArray, theGap, theTopPad, theSidePad, theBarHeight, theCol
       tag += "<tr><td>Zeit:</td><td>" + getReadableDate(start) + " - " + getReadableDate(end) + "</td>"
     }
 
+    if (d3.select(this).data()[0].state != undefined){
+      tag += "<tr><td>Status:</td><td>" + d3.select(this).data()[0].state + "</td>"
+    }
+
     if (d3.select(this).data()[0].details != undefined){
-      tag += "<tr><td>Details:</td><td>" + d3.select(this).data()[0].details + "</td>"
+      tag += "<tr><td valign='top'>Details:</td><td>" + d3.select(this).data()[0].details + "</td>"
     }
 
     tag += "</table>"

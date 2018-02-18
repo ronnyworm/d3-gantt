@@ -66,24 +66,10 @@ window.colorrange = ["#ff0", "#0f0"]; // http://www.rapidtables.com/web/color/RG
 window.ganttTitle = "My nice Gantt";
 
 
-
-// can be used for start or enddate of a task
-function todayAsString(){
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-
-    if(dd<10) {
-        dd='0'+dd
-    } 
-
-    if(mm<10) {
-        mm='0'+mm
-    } 
-
-    //if (window.overallperiod == "months") {
-    today = yyyy + "-" + mm + "-" + dd;
-
-    return today;
-}
+// optional
+//window.ganttstates = {};
+//window.ganttstates["default"] = "#afa";
+//window.ganttstates["verspätet"] = "#FFA500";
+//window.ganttstates["neu"] = "#ff0";
+//window.ganttstates["weggefallen"] = "#fff";
+// http://www.rapidtables.com/web/color/RGB_Color.htm
