@@ -9,6 +9,29 @@ var svg = d3.selectAll(".svg")
   .attr("height", h)
   .attr("class", "svg");
 
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+Date.prototype.yyyymmdd = function() {
+  var date = new Date(this.valueOf());
+  var dd = date.getDate();
+  var mm = date.getMonth()+1; //January is 0!
+  var yyyy = date.getFullYear();
+
+  if(dd<10) {
+      dd='0'+dd
+  } 
+
+  if(mm<10) {
+      mm='0'+mm
+  } 
+
+  return yyyy + "-" + mm + "-" + dd;
+}
+
 
 if(window.overallperiod == "months"){
   var dateFormat = d3.time.format("%Y-%m-%d");
@@ -17,6 +40,11 @@ if(window.overallperiod == "months"){
 else if (window.overallperiod == "one day") {
   var dateFormat = d3.time.format("%Y-%m-%d %H:%M");
   var tageZurueck = 0.02;
+}
+
+// add one day for the graphical representation
+for (var i = 0; i < window.taskArray.length; i++){
+  window.taskArray[i].endTime = new Date(window.taskArray[i].endTime).addDays(1).yyyymmdd();
 }
 
 var timeScale = d3.time.scale().domain(
@@ -216,7 +244,8 @@ function drawRects(theArray, theGap, theTopPad, theSidePad, theBarHeight, theCol
     var tag = "";
 
     start = d3.select(this).data()[0].startTime;
-    end = d3.select(this).data()[0].endTime;
+    // remove one day for the correct text (see "add one day" above)
+    end = new Date(d3.select(this).data()[0].endTime).addDays(-1).yyyymmdd();
 
     tag = "<table>"
     //"<tr><td>Aufgabe:</td><td>" + d3.select(this).data()[0].task + "</td>" +
